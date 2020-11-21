@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"time"
 
 	artifactModel "github.com/blankon/irgsh-go/internal/artifact/model"
@@ -63,7 +64,17 @@ func (A *ArtifactService) SubmitPackage(tarball string) (job SubmissionJob, err 
 
 	submittedJob.TaskUUID = generateSubmissionUUID(submittedJob.Timestamp)
 
-	// err = A.repo.(tarball)
+	err = A.repo.PutTarballToFile(&tarball, submittedJob.TaskUUID)
+	if err != nil {
+		return job, errors.New("Can't store tarball " + err.Error())
+	}
+
+	err = A.repo.ExtractSubmittedTarball(submittedJob.TaskUUID)
+	if err != nil {
+		return job, errors.New("Can't extract tarball " + err.Error())
+	}
+
+	// verify the package
 
 	return
 }

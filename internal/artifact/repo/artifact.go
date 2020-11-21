@@ -15,5 +15,6 @@ type ArtifactList struct {
 // Repo interface to operate with artifact
 type Repo interface {
 	GetArtifactList(pageNum int64, rows int64) (ArtifactList, error)
-	PutTarballToFile(tarball *string) error
+	PutTarballToFile(tarball *string, taskUUID string) error
+	ExtractSubmittedTarball(taskUUID string) error
 }

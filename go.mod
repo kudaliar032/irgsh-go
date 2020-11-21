@@ -13,6 +13,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/leodido/go-urn v1.1.0 // indirect
 	github.com/manifoldco/promptui v0.3.2
+	github.com/matryer/moq v0.1.4 // indirect
 	github.com/stretchr/testify v1.2.2
 	github.com/urfave/cli v1.20.0
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect

@@ -4,6 +4,8 @@ import (
 	"os"
 	"reflect"
 	"testing"
+
+	model "github.com/blankon/irgsh-go/internal/artifact/model"
 )
 
 func TestMain(m *testing.M) {
@@ -81,9 +83,9 @@ func TestFileRepo_GetArtifactList(t *testing.T) {
 			},
 			wantArtifactsList: ArtifactList{
 				TotalData: 2,
-				Artifacts: []ArtifactModel{
-					ArtifactModel{Name: "file001"},
-					ArtifactModel{Name: "file002"},
+				Artifacts: []model.Artifact{
+					{Name: "file001"},
+					{Name: "file002"},
 				},
 			},
 		},

@@ -3,6 +3,8 @@ package repo
 import (
 	"path/filepath"
 	"strings"
+
+	model "github.com/blankon/irgsh-go/internal/artifact/model"
 )
 
 // FileRepo interface with file system based artifact information
@@ -25,13 +27,18 @@ func (A *FileRepo) GetArtifactList(pageNum int64, rows int64) (artifactsList Art
 		return
 	}
 
-	artifactsList.Artifacts = []ArtifactModel{}
+	artifactsList.Artifacts = []model.Artifact{}
 
 	for _, file := range files {
-		artifactsList.Artifacts = append(artifactsList.Artifacts, ArtifactModel{Name: getArtifactFilename(file)})
+		artifactsList.Artifacts = append(artifactsList.Artifacts, model.Artifact{Name: getArtifactFilename(file)})
 	}
 	artifactsList.TotalData = len(artifactsList.Artifacts)
 
+	return
+}
+
+// PutTarballToFile not it's just general function to write string of base64 to file
+func (A *FileRepo) PutTarballToFile(tarball *string) (err error) {
 	return
 }
 

@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: get current date
-      run: echo "date=$(TZ='Asia/Jakarta' date +'%Y%m%d%H%M')" >> $BUILD_DATE
+      run: echo "irgsh_build_date=$(TZ='Asia/Jakarta' date +'%Y%m%d%H%M')" >> $GITHUB_ENV
     - uses: actions/checkout@v3
     - name: build development release
       run: |
@@ -21,7 +21,7 @@ jobs:
         curl -O https://storage.googleapis.com/golang/go1.13.14.linux-amd64.tar.gz
         tar -xf go1.13.14.linux-amd64.tar.gz
         sudo mv go /usr/local
-        echo $BUILD_DATE-development-build > VERSION
+        echo ${{ env.irgsh_build_date }}-development-build > VERSION
         make release
         mv target/{release,pre-release}.tar.gz
     - uses: actions/upload-artifact@v3

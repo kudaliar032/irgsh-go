@@ -1,9 +1,9 @@
-name: generic
+name: generic github actions
 
 on:
   push:
-    branches:
-      - '!master'
+    branches-ignore:
+      - 'master'
   pull_request:
     branches:
       - '*'
@@ -37,6 +37,13 @@ jobs:
       with:
         name: pre-release.tar.gz
     - run: ls -l
+    - name: create github release
+      uses: softprops/action-gh-release@v0.1.15
+      with:
+        draft: false
+        prerelease: true
+        files: |
+          pre-release.tar.gz
 
   # deploy:
   #   runs-on: ubuntu-latest

@@ -18,9 +18,12 @@ jobs:
     - name: get current date
       run: echo "irgsh_build_date=$(TZ='Asia/Jakarta' date +'%Y%m%d%H%M')" >> $GITHUB_ENV
     - uses: actions/checkout@v3
+    - name: install needed apt packages
+      uses: awalsh128/cache-apt-pkgs-action@v1.2.3
+      with:
+        packages: gpg pbuilder debootstrap devscripts python3-apt reprepro make
     - name: build development release
       run: |
-        sudo apt update && sudo apt install -y gpg pbuilder debootstrap devscripts python3-apt reprepro make
         curl -O https://storage.googleapis.com/golang/go1.13.14.linux-amd64.tar.gz
         tar -xf go1.13.14.linux-amd64.tar.gz
         sudo mv go /usr/local
@@ -43,8 +46,8 @@ jobs:
         name: pre-release.tar.gz
     - name: extract release
       run: |
-        ls -l
-        tar xzf pre-release.tar.gz
+        tar xvzf pre-release.tar.gz
+        cp $(find . -type f -name "irgsh-cli") .
     - name: create github release
       uses: softprops/action-gh-release@v0.1.15
       with:
@@ -55,7 +58,7 @@ jobs:
         tag_name: ${{ needs.build.outputs.irgsh_build_date }}-development-build
         files: |
           pre-release.tar.gz
-          release/irgsh-go/usr/bin/irgsh-cli
+          irgsh-cli
 
   # deploy:
   #   runs-on: ubuntu-latest

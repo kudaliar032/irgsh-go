@@ -48,7 +48,6 @@ jobs:
     - name: create github release
       uses: softprops/action-gh-release@v0.1.15
       with:
-        token: ${{  }}
         name: ${{ needs.build.outputs.irgsh_build_date }} Development Release
         body: Development release ${{ needs.build.outputs.irgsh_build_date }}
         draft: false

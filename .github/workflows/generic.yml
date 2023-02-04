@@ -77,4 +77,4 @@ jobs:
       with:
         url: ${{ secrets.RAFI_TENDANG_URL }}
         token: ${{ secrets.RAFI_DEPLOYMENT_KEY }}
-        name: "the-app"
+        name: "${{ secrets.RAFI_DEPLOYMENT_NAME }}"

@@ -8,6 +8,9 @@ on:
     branches:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +31,8 @@ jobs:
       with:
         name: pre-release.tar.gz
         path: target/
+    outputs:
+      irgsh_build_date: ${{ env.irgsh_build_date }}
 
   release:
     runs-on: ubuntu-latest
@@ -43,9 +48,12 @@ jobs:
     - name: create github release
       uses: softprops/action-gh-release@v0.1.15
       with:
+        token: ${{  }}
+        name: ${{ needs.build.outputs.irgsh_build_date }} Development Release
+        body: Development release ${{ needs.build.outputs.irgsh_build_date }}
         draft: false
         prerelease: true
-        tag_name: ${{ env.irgsh_build_date }}-development-build
+        tag_name: ${{ needs.build.outputs.irgsh_build_date }}-development-build
         files: |
           pre-release.tar.gz
           release/irgsh-go/usr/bin/irgsh-cli

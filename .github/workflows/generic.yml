@@ -34,6 +34,14 @@ jobs:
       with:
         name: pre-release.tar.gz
         path: target/
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
     outputs:
       irgsh_build_date: ${{ env.irgsh_build_date }}
 

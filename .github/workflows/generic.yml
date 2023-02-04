@@ -59,11 +59,11 @@ jobs:
     - name: create github release
       uses: softprops/action-gh-release@v0.1.15
       with:
-        name: ${{ needs.build.outputs.irgsh_build_date }} Development Release
-        body: Development release ${{ needs.build.outputs.irgsh_build_date }}
+        name: ${{ needs.build-devel.outputs.irgsh_build_date }} Development Release
+        body: Development release ${{ needs.build-devel.outputs.irgsh_build_date }}
         draft: false
         prerelease: true
-        tag_name: ${{ needs.build.outputs.irgsh_build_date }}-development-build
+        tag_name: ${{ needs.build-devel.outputs.irgsh_build_date }}-development-build
         files: |
           pre-release.tar.gz
           irgsh-cli

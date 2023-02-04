@@ -36,14 +36,19 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: pre-release.tar.gz
-    - run: ls -l
+    - name: extract release
+      run: |
+        ls -l
+        tar xzf pre-release.tar.gz
     - name: create github release
       uses: softprops/action-gh-release@v0.1.15
       with:
         draft: false
         prerelease: true
+        tag_name: ${{ env.irgsh_build_date }}-development-build
         files: |
           pre-release.tar.gz
+          release/irgsh-go/usr/bin/irgsh-cli
 
   # deploy:
   #   runs-on: ubuntu-latest

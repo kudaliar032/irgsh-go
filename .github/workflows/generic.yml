@@ -1,4 +1,4 @@
-name: generic github actions
+name: Generic github actions
 
 on:
   push:
@@ -15,10 +15,10 @@ jobs:
   build-devel:
     runs-on: ubuntu-latest
     steps:
-    - name: get current date
+    - name: Get current date
       run: echo "irgsh_build_date=$(TZ='Asia/Jakarta' date +'%Y%m%d%H%M')" >> $GITHUB_ENV
     - uses: actions/checkout@v3
-    - name: install needed apt packages
+    - name: Install needed apt packages
       uses: awalsh128/cache-apt-pkgs-action@v1.2.3
       with:
         packages: gpg pbuilder debootstrap devscripts python3-apt reprepro make
@@ -34,7 +34,7 @@ jobs:
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
-    - name: build development release
+    - name: Build development release
       run: |
         echo ${{ env.irgsh_build_date }}-development-build > VERSION
         make release
@@ -53,11 +53,11 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: pre-release.tar.gz
-    - name: extract release
+    - name: Extract pre-release
       run: |
         tar xvzf pre-release.tar.gz
         cp $(find . -type f -name "irgsh-cli") .
-    - name: create github release
+    - name: Create github pre-release
       uses: softprops/action-gh-release@v0.1.15
       with:
         name: ${{ needs.build-devel.outputs.irgsh_build_date }} Development Release
